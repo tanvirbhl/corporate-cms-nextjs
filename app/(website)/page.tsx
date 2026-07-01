@@ -1,7 +1,12 @@
-export default function HomePage() {
+import Hero from "@/features/hero/Hero";
+import { getHeroBanner } from "@/actions/hero.action";
+
+export default async function HomePage() {
+  const heroData = await getHeroBanner();
+
   return (
-    <div className="min-h-[200vh] flex items-start justify-center pt-20">
-      <h1 className="text-4xl font-bold text-gray-300">HomePage</h1>
+    <div>
+      <Hero data={heroData} />
     </div>
   );
 }
