@@ -5,6 +5,7 @@ import {
   FiMenu,
   FiLogOut,
   FiImage,
+  FiInfo,
 } from "react-icons/fi";
 
 export const metadata = {
@@ -53,10 +54,12 @@ export default function AdminLayout({
             <FiImage />
             <span>Hero Banner</span>
           </Link>
-
-          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-8">
-            Future Modules
-          </div>
+          <Link
+            href="/admin/about"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiInfo /> <span>About Us</span>
+          </Link>
 
           <Link
             href="/admin/settings"
