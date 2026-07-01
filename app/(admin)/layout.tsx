@@ -6,6 +6,7 @@ import {
   FiLogOut,
   FiImage,
   FiInfo,
+  FiBriefcase,
 } from "react-icons/fi";
 
 export const metadata = {
@@ -59,6 +60,13 @@ export default function AdminLayout({
             className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
           >
             <FiInfo /> <span>About Us</span>
+          </Link>
+
+          <Link
+            href="/admin/services"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiBriefcase /> <span>Services</span>
           </Link>
 
           <Link
