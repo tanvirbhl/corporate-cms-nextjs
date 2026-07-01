@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Navbar from "@/features/navbar/Navbar";
 import NavbarSkeleton from "@/components/ui/NavbarSkeleton";
 import { getActiveNavbarLinks } from "@/actions/navbar.action";
+import Footer from "@/components/ui/Footer";
 
 export default async function WebsiteLayout({
   children,
@@ -19,6 +20,7 @@ export default async function WebsiteLayout({
       <main className="flex-grow pt-20">
         {children}
       </main>
+      <Footer/>
     </>
   );
 }
