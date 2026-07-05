@@ -61,6 +61,19 @@ export default function AdminLayout({
           >
             <FiInfo /> <span>About Us</span>
           </Link>
+          <Link
+            href="/admin/form-builder"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiInfo /> <span>Contact Form</span>
+          </Link>
+
+          <Link
+            href="/admin/messages"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiInfo /> <span>Message</span>
+          </Link>
 
           <Link
             href="/admin/services"
