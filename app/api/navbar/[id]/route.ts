@@ -3,51 +3,69 @@ import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "@/lib/mongoose";
 import NavbarLink from "@/models/NavbarLink";
 
-// We define params as a Promise
+// GET single link
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params; // Await the params here
+  const { id } = await params;
+  
   try {
     await connectToDatabase();
     const link = await NavbarLink.findById(id);
-    if (!link) return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    
+    if (!link) {
+      return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    }
+    
     return NextResponse.json({ success: true, data: link }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ success: false, message: "Error" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Error fetching link" }, { status: 500 });
   }
 }
 
+// PUT (Update) link
 export async function PUT(
-  request: Request,
+  req: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params; // Await the params here
+  const { id } = await params;
+
   try {
     await connectToDatabase();
-    const body = await request.json();
-    const updatedLink = await NavbarLink.findByIdAndUpdate(id, body, { new: true, runValidators: true });
+    const body = await req.json();
     
-    if (!updatedLink) return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    const updatedLink = await NavbarLink.findByIdAndUpdate(
+      id, 
+      body, 
+      { new: true, runValidators: true } 
+    );
+
+    if (!updatedLink) {
+      return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    }
     
-    revalidatePath("/", "layout");
-    return NextResponse.json({ success: true, data: updatedLink }, { status: 200 });
+    revalidatePath("/", "layout"); // Force the public site to update
+    return NextResponse.json({ success: true, data: updatedLink });
   } catch (error) {
-    return NextResponse.json({ success: false, message: "Update failed" }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Failed to update link" }, { status: 500 });
   }
 }
 
+// DELETE link
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params; // Await the params here
+  const { id } = await params;
+  
   try {
     await connectToDatabase();
     const deletedLink = await NavbarLink.findByIdAndDelete(id);
     
-    if (!deletedLink) return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    if (!deletedLink) {
+      return NextResponse.json({ success: false, message: "Not found" }, { status: 404 });
+    }
     
     revalidatePath("/", "layout");
     return NextResponse.json({ success: true, message: "Deleted" }, { status: 200 });

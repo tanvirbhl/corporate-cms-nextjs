@@ -68,6 +68,12 @@ export default function AdminLayout({
           >
             <FiBriefcase /> <span>Services</span>
           </Link>
+          <Link
+            href="/admin/projects"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiBriefcase /> <span>Projects</span>
+          </Link>
 
           <Link
             href="/admin/settings"

@@ -3,36 +3,30 @@ import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "@/lib/mongoose";
 import NavbarLink from "@/models/NavbarLink";
 
+// GET all links
 export async function GET() {
   try {
     await connectToDatabase();
-    const links = await NavbarLink.find().sort({ order: 1 });
+    // Fetch all links, sorted by their 'order' field ascending
+    const links = await NavbarLink.find({}).sort({ order: 1 });
+    
     return NextResponse.json({ success: true, data: links }, { status: 200 });
-  } catch (error: any) {
-    console.error("GET /api/navbar error:", error);
-    return NextResponse.json(
-      { success: false, message: "Failed to fetch navbar links" },
-      { status: 500 }
-    );
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Failed to fetch links" }, { status: 500 });
   }
 }
 
-export async function POST(request: Request) {
+// POST (Create) new link
+export async function POST(req: Request) {
   try {
     await connectToDatabase();
-    const body = await request.json();
+    const body = await req.json();
     
     const newLink = await NavbarLink.create(body);
     
-    // OPTIMIZATION: Instantly clear the cache for the public website layout
-    revalidatePath("/", "layout");
-    
+    revalidatePath("/", "layout"); // Force the public site to update
     return NextResponse.json({ success: true, data: newLink }, { status: 201 });
-  } catch (error: any) {
-    console.error("POST /api/navbar error:", error);
-    return NextResponse.json(
-      { success: false, message: "Failed to create navbar link" },
-      { status: 500 }
-    );
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Failed to create link" }, { status: 500 });
   }
 }
