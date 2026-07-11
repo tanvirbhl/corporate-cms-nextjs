@@ -8,6 +8,8 @@ import {
   FiInfo,
   FiBriefcase,
 } from "react-icons/fi";
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
+
 
 export const metadata = {
   title: "Admin Dashboard | Corporate CMS",
@@ -47,6 +49,13 @@ export default function AdminLayout({
             <FiMenu />
             <span>Navbar</span>
           </Link>
+          <Link
+            href="/admin/slider"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <TfiLayoutSliderAlt />
+            <span>Slider</span>
+          </Link>
 
           <Link
             href="/admin/hero"
@@ -54,6 +63,13 @@ export default function AdminLayout({
           >
             <FiImage />
             <span>Hero Banner</span>
+          </Link>
+          <Link
+            href="/admin/client-logos"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiImage />
+            <span>Trusted Clients</span>
           </Link>
           <Link
             href="/admin/about"
