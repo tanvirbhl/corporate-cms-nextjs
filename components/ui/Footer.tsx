@@ -26,17 +26,17 @@ export default async function Footer() {
           <div className="flex space-x-4">
             {settings.socialLinks?.facebook && (
               <Link href={settings.socialLinks.facebook} target="_blank">
-                <FiFacebook className="text-2xl hover:text-brand-primary" />
+                <FiFacebook className="text-2xl " />
               </Link>
             )}
             {settings.socialLinks?.linkedin && (
               <Link href={settings.socialLinks.linkedin} target="_blank">
-                <FiLinkedin className="text-2xl hover:text-brand-primary" />
+                <FiLinkedin className="text-2xl " />
               </Link>
             )}
             {settings.socialLinks?.github && (
               <Link href={settings.socialLinks.github} target="_blank">
-                <FiGithub className="text-2xl hover:text-brand-primary" />
+                <FiGithub className="text-2xl " />
               </Link>
             )}
           </div>
