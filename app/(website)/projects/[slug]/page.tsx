@@ -15,7 +15,11 @@ export async function generateStaticParams() {
 }
 
 // 2. Generate Dynamic SEO Meta Tags
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
@@ -31,7 +35,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 // 3. The Page Component
-export default async function ProjectDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ProjectDetailsPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
 
@@ -40,11 +48,11 @@ export default async function ProjectDetailsPage({ params }: { params: Promise<{
   }
 
   return (
-    <main className="flex flex-col min-h-screen pt-28 pb-0">
-      <div className="container mx-auto px-4 md:px-6 py-12 lg:py-16">
-        
+
+    <main className="py-20 bg-gray-50 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <Link 
+        <Link
           href="/projects"
           className="inline-flex items-center text-slate-500 hover:text-blue-600 font-medium mb-10 transition-colors"
         >
@@ -81,7 +89,6 @@ export default async function ProjectDetailsPage({ params }: { params: Promise<{
 
         {/* Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mb-20">
-          
           {/* Main Content (Left) */}
           <div className="lg:col-span-2 space-y-8">
             <FadeInView direction="up">
@@ -92,8 +99,6 @@ export default async function ProjectDetailsPage({ params }: { params: Promise<{
                 {project.shortSummary}
               </p>
             </FadeInView>
-            
-            {/* Future expansion: When you add more rich text fields (Challenge, Solution) to the CMS, they will go here! */}
           </div>
 
           {/* Sidebar (Right) */}
@@ -107,14 +112,16 @@ export default async function ProjectDetailsPage({ params }: { params: Promise<{
                       Technologies Used
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech: string, index: number) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1.5 bg-white text-slate-700 font-medium text-sm rounded-lg border border-slate-200 shadow-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                      {project.technologies.map(
+                        (tech: string, index: number) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1.5 bg-white text-slate-700 font-medium text-sm rounded-lg border border-slate-200 shadow-sm"
+                          >
+                            {tech}
+                          </span>
+                        ),
+                      )}
                     </div>
                   </div>
                 )}
