@@ -108,6 +108,12 @@ export default function AdminLayout({
           >
             <FiBriefcase /> <span>Notice</span>
           </Link>
+          <Link
+            href="/admin/acheiveents"
+            className="flex items-center space-x-3 px-3 py-2 rounded-md text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <FiBriefcase /> <span>Achievements</span>
+          </Link>
 
           <Link
             href="/admin/settings"
