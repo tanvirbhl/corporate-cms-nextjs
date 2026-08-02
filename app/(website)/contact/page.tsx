@@ -9,11 +9,11 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    // 1. Increased top padding to match the homepage hero spacing
+   
     <main className="flex flex-col min-h-screen pt-36 pb-20">
       
-      {/* 2. CHANGED: Replaced "container" with the exact same wrapper used in Navbar.tsx */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     
+      <div className="  mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Header */}
         <FadeInView>

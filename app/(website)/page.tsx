@@ -2,6 +2,7 @@ import Hero from "@/features/hero/Hero";
 import { getHeroBanner } from "@/actions/hero.action";
 import { HomeSlider } from "@/components/sections/home/HomeSlider";
 import { TrustedClients } from "@/components/sections/home/TrustedClients";
+import { NoticeBoard } from "@/components/sections/home/NoticeBoard";
 
 export default async function HomePage() {
   const heroData = await getHeroBanner();
@@ -11,6 +12,7 @@ export default async function HomePage() {
       <HomeSlider />
       <Hero data={heroData} />
       <TrustedClients/>
+      <NoticeBoard/>
     </div>
   );
 }

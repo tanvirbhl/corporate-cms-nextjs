@@ -15,7 +15,7 @@ export default function AboutSection({ data }: AboutProps) {
 
   return (
     <section className="py-20 bg-gray-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+      <div className="  mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
         
         {/* Animated Image Container */}
         <motion.div 

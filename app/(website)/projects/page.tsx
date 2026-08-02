@@ -18,7 +18,7 @@ export default async function ProjectsIndexPage() {
     <main className="flex flex-col min-h-screen pt-28 pb-0 X">
       
       {/* Header Section */}
-      <section className="max-w-7xl container mx-auto px-4 md:px-6 mb-16">
+      <section className="  container mx-auto px-4 md:px-6 mb-16">
         <FadeInView>
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight mb-6">
@@ -32,7 +32,7 @@ export default async function ProjectsIndexPage() {
       </section>
 
       {/* Projects Grid */}
-      <section className="max-w-7xl container mx-auto px-4 md:px-6 mb-24">
+      <section className="  container mx-auto px-4 md:px-6 mb-24">
         {projects.length === 0 ? (
           <div className="text-center py-24 bg-slate-50 rounded-2xl border border-slate-100">
             <h3 className="text-xl font-semibold text-slate-900">Check back soon</h3>

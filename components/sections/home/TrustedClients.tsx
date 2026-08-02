@@ -58,7 +58,7 @@ export function TrustedClients() {
         </FadeInView>
       </div>
 
-      {/* 2. FIX: Replaced max-w-7xl with w-full to stretch edge-to-edge */}
+      {/* 2. FIX: Replaced   with w-full to stretch edge-to-edge */}
       <div className="relative w-full">
         <div
           className="flex overflow-hidden relative w-full"
