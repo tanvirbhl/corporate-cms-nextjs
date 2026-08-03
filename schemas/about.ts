@@ -1,9 +1,66 @@
-import { z } from "zod";
+import mongoose, { Schema, Document } from "mongoose";
 
-export const aboutSchema = z.object({
-  title: z.string().min(3, "Title is required"),
-  content: z.string().min(20, "Content must be at least 20 characters"),
-  imageUrl: z.string().url("Valid image URL is required"),
-});
+export interface IAbout extends Document {
+  // Visibility Toggles
+  showHero: boolean;
+  showMissionVision: boolean;
+  showChairman: boolean;
+  showDirector: boolean;
+  showCeo: boolean;
 
-export type AboutFormValues = z.infer<typeof aboutSchema>;
+  // Hero
+  heroTitle: string;
+  heroDescription: string;
+  heroImage: string;
+  
+  // Mission / Vision
+  mission: string;
+  vision: string;
+  
+  // Messages
+  chairmanName: string;
+  chairmanMessage: string;
+  chairmanImage: string;
+  
+  directorName: string;
+  directorMessage: string;
+  directorImage: string;
+
+  ceoName: string;
+  ceoMessage: string;
+  ceoImage: string;
+}
+
+const aboutSchema = new Schema<IAbout>(
+  {
+    showHero: { type: Boolean, default: true },
+    showMissionVision: { type: Boolean, default: true },
+    showChairman: { type: Boolean, default: true },
+    showDirector: { type: Boolean, default: true },
+    showCeo: { type: Boolean, default: false },
+
+    heroTitle: { type: String, default: "" },
+    heroDescription: { type: String, default: "" },
+    heroImage: { type: String, default: "" },
+    
+    mission: { type: String, default: "" },
+    vision: { type: String, default: "" },
+    
+    chairmanName: { type: String, default: "" },
+    chairmanMessage: { type: String, default: "" },
+    chairmanImage: { type: String, default: "" },
+    
+    directorName: { type: String, default: "" },
+    directorMessage: { type: String, default: "" },
+    directorImage: { type: String, default: "" },
+
+    ceoName: { type: String, default: "" },
+    ceoMessage: { type: String, default: "" },
+    ceoImage: { type: String, default: "" },
+  },
+  { timestamps: true }
+);
+
+const About = mongoose.models.About || mongoose.model<IAbout>("About", aboutSchema);
+
+export default About;
