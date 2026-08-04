@@ -6,7 +6,7 @@ export const heroSchema = z.object({
   buttonText: z.string().min(2, "Button text is required"),
   buttonHref: z.string().min(1, "Link is required"),
   imageUrl: z.string().url("Must be a valid URL"),
-  isVisible: z.boolean().default(true),
+  isVisible: z.boolean(), 
 });
 
 export type HeroFormValues = z.infer<typeof heroSchema>;

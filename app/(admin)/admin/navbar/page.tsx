@@ -26,7 +26,7 @@ export default function NavbarAdminPage() {
     control,
     formState: { errors, isSubmitting },
   } = useForm<NavbarFormValues>({
-    resolver: zodResolver(navbarSchema),
+    resolver: zodResolver(navbarSchema) as any,
     defaultValues: {
       order: 0,
       isVisible: true,

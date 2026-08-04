@@ -14,17 +14,3 @@ export async function POST(request: Request) {
   const service = await Service.create(body);
   return NextResponse.json({ success: true, data: service });
 }
-
-
-export async function DELETE(
-  request: Request, 
-  { params }: { params: Promise<{ id: string }> }
-) {
-  // Await the params object
-  const { id } = await params;
-  
-  await connectToDatabase();
-  await Service.findByIdAndDelete(id);
-  
-  return NextResponse.json({ success: true });
-}

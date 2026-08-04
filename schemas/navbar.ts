@@ -11,7 +11,7 @@ export const navbarSchema = z.object({
   order: z.coerce.number(),
   isVisible: z.boolean().default(true),
   isCta: z.boolean().default(false),
-  subLinks: z.array(subLinkSchema).optional().default([]), // <-- Added this
+  subLinks: z.array(subLinkSchema).optional().default([]), 
 });
 
 export type NavbarFormValues = z.infer<typeof navbarSchema>;
