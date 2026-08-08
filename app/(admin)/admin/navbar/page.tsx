@@ -22,11 +22,10 @@ export default function NavbarAdminPage() {
     register,
     handleSubmit,
     reset,
-    setValue,
     control,
     formState: { errors, isSubmitting },
   } = useForm<NavbarFormValues>({
-    resolver: zodResolver(navbarSchema) as any,
+    resolver: zodResolver(navbarSchema) as any, // Bypass strict type check for defaults
     defaultValues: {
       order: 0,
       isVisible: true,
@@ -73,7 +72,13 @@ export default function NavbarAdminPage() {
       order: link.order,
       isVisible: link.isVisible,
       isCta: link.isCta,
-      subLinks: link.subLinks || [],
+      // FIXED: Added (sub, index) to the map parameters so 'index' exists
+      subLinks: link.subLinks?.map((sub, index) => ({
+        name: sub.name,
+        href: sub.href,
+        isVisible: sub.isVisible !== false, 
+        order: sub.order ?? index,
+      })) || [],
     });
     setIsModalOpen(true);
   };
@@ -237,7 +242,7 @@ export default function NavbarAdminPage() {
                   <label className="block text-sm font-medium text-gray-900">Dropdown Sub-links</label>
                   <button
                     type="button"
-                    onClick={() => append({ name: "", href: "" })}
+                    onClick={() => append({ name: "", href: "", isVisible: true, order: fields.length })}
                     className="text-xs bg-white border border-gray-300 px-2 py-1 rounded text-gray-600 hover:text-brand-accent hover:border-brand-accent transition-colors flex items-center"
                   >
                     <FiPlus className="mr-1" /> Add Sub-link
@@ -249,23 +254,50 @@ export default function NavbarAdminPage() {
                 ) : (
                   <div className="space-y-3">
                     {fields.map((field, index) => (
-                      <div key={field.id} className="flex gap-2 items-start bg-white p-2 border border-gray-200 rounded-md">
-                        <div className="flex-1 space-y-2">
-                          <input
-                            {...register(`subLinks.${index}.name`)}
-                            className="w-full border border-gray-300 rounded-md px-2 py-1.5 text-xs focus:ring-1 focus:ring-brand-accent"
-                            placeholder="Sub-link Name (e.g. Web Design)"
-                          />
-                          <input
-                            {...register(`subLinks.${index}.href`)}
-                            className="w-full border border-gray-300 rounded-md px-2 py-1.5 text-xs focus:ring-1 focus:ring-brand-accent"
-                            placeholder="Sub-link Href (e.g. /services/web)"
-                          />
+                      <div key={field.id} className="flex gap-2 items-start bg-white p-3 border border-gray-200 rounded-md">
+                        <div className="flex-1 space-y-3">
+                          <div className="grid grid-cols-12 gap-2">
+                            <div className="col-span-2">
+                              <input
+                                type="number"
+                                {...register(`subLinks.${index}.order`)}
+                                className="w-full border border-gray-300 rounded-md px-2 py-1.5 text-xs focus:ring-1 focus:ring-brand-accent"
+                                placeholder="Order"
+                                title="Sort Order"
+                              />
+                            </div>
+                            <div className="col-span-5">
+                              <input
+                                {...register(`subLinks.${index}.name`)}
+                                className="w-full border border-gray-300 rounded-md px-2 py-1.5 text-xs focus:ring-1 focus:ring-brand-accent"
+                                placeholder="Sub-link Name"
+                              />
+                            </div>
+                            <div className="col-span-5">
+                              <input
+                                {...register(`subLinks.${index}.href`)}
+                                className="w-full border border-gray-300 rounded-md px-2 py-1.5 text-xs focus:ring-1 focus:ring-brand-accent"
+                                placeholder="Sub-link Href"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center">
+                            <label className="text-xs font-medium text-gray-700 cursor-pointer flex items-center space-x-2">
+                              {/* FIXED: Added defaultChecked to ensure UI updates correctly */}
+                              <input 
+                                type="checkbox" 
+                                defaultChecked={field.isVisible}
+                                {...register(`subLinks.${index}.isVisible`)} 
+                                className="rounded text-brand-accent focus:ring-brand-accent" 
+                              />
+                              <span>Show in dropdown</span>
+                            </label>
+                          </div>
                         </div>
                         <button
                           type="button"
                           onClick={() => remove(index)}
-                          className="p-2 text-gray-400 hover:text-red-500 bg-gray-50 rounded"
+                          className="p-2 text-gray-400 hover:text-red-500 bg-gray-50 rounded mt-1"
                         >
                           <FiTrash2 size={14} />
                         </button>

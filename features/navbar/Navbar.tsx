@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { NavbarLinkData } from "@/actions/navbar.action";
 
-// Extended interface to include subLinks from our new schema
+// 1. Updated interface to include isVisible and order
 interface ExtendedNavbarLinkData extends NavbarLinkData {
-  subLinks?: { name: string; href: string; _id?: string }[];
+  subLinks?: { name: string; href: string; _id?: string; isVisible?: boolean; order?: number }[];
 }
 
 interface NavbarProps {
@@ -70,7 +70,6 @@ export default function Navbar({ links }: NavbarProps) {
               return hasSubLinks ? (
                 // Dropdown Link
                 <div key={link._id} className="relative group">
-                  {/* Changed from <button> to <Link> to enable navigation */}
                   <Link 
                     href={link.href} 
                     className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-brand-accent transition-colors duration-200 py-2"
@@ -82,7 +81,11 @@ export default function Navbar({ links }: NavbarProps) {
                   {/* Dropdown Menu Panel (CSS Hover) */}
                   <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out z-50">
                     <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-2 flex flex-col gap-1">
-                      {link.subLinks!.map((sub) => (
+                      {/* 2. Filter and Sort applied here for Desktop */}
+                      {link.subLinks!
+                        .filter((sub) => sub.isVisible !== false)
+                        .sort((a, b) => (a.order || 0) - (b.order || 0))
+                        .map((sub) => (
                         <Link
                           key={sub.name}
                           href={sub.href}
@@ -153,7 +156,6 @@ export default function Navbar({ links }: NavbarProps) {
                 return hasSubLinks ? (
                   // Mobile Dropdown Accordion
                   <motion.div key={link._id} variants={itemVariants} className="flex flex-col">
-                    {/* Split row: Link on the left, toggle button on the right */}
                     <div className="flex items-center justify-between w-full hover:bg-gray-50 rounded-md transition-colors">
                       <Link
                         href={link.href}
@@ -180,7 +182,11 @@ export default function Navbar({ links }: NavbarProps) {
                           className="overflow-hidden bg-gray-50/50 rounded-lg mt-1"
                         >
                           <div className="pl-6 pr-3 py-2 space-y-1 border-l-2 border-brand-accent/20 ml-4">
-                            {link.subLinks!.map((sub) => (
+                            {/* 3. Filter and Sort applied here for Mobile */}
+                            {link.subLinks!
+                              .filter((sub) => sub.isVisible !== false)
+                              .sort((a, b) => (a.order || 0) - (b.order || 0))
+                              .map((sub) => (
                               <Link
                                 key={sub.name}
                                 href={sub.href}
