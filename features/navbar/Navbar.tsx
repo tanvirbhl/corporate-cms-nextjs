@@ -56,72 +56,81 @@ export default function Navbar({ links }: NavbarProps) {
       <div className="  mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           
+          {/* 1. LOGO (LEFT SIDE) */}
           <div className="flex-shrink-0">
             <Link href="/" className="text-2xl font-bold text-brand-primary tracking-tight">
               Skyland<span className="text-brand-accent">.</span>
             </Link>
           </div>
 
-          {/* DESKTOP NAVIGATION */}
-          <nav className="hidden md:flex space-x-8">
-            {regularLinks.map((link) => {
-              const hasSubLinks = link.subLinks && link.subLinks.length > 0;
+          {/* 2. DESKTOP NAVIGATION & CTA (RIGHT SIDE GROUP) */}
+          <div className="hidden md:flex items-center space-x-8">
+            
+            {/* Nav Links */}
+            <nav className="flex space-x-8">
+              {regularLinks.map((link) => {
+                const hasSubLinks = link.subLinks && link.subLinks.length > 0;
 
-              return hasSubLinks ? (
-                // Dropdown Link
-                <div key={link._id} className="relative group">
-                  <Link 
-                    href={link.href} 
-                    className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-brand-accent transition-colors duration-200 py-2"
-                  >
-                    {link.name}
-                    <FiChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
-                  </Link>
+                return hasSubLinks ? (
+                  // Dropdown Link
+                  <div key={link._id} className="relative group">
+                    <Link 
+                      href={link.href} 
+                      className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-brand-accent transition-colors duration-200 py-2"
+                    >
+                      {link.name}
+                      <FiChevronDown className="group-hover:rotate-180 transition-transform duration-300" />
+                    </Link>
 
-                  {/* Dropdown Menu Panel (CSS Hover) */}
-                  <div className="absolute top-full left-0 mt-2 w-48 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out z-50">
-                    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-2 flex flex-col gap-1">
-                      {/* 2. Filter and Sort applied here for Desktop */}
-                      {link.subLinks!
-                        .filter((sub) => sub.isVisible !== false)
-                        .sort((a, b) => (a.order || 0) - (b.order || 0))
-                        .map((sub) => (
-                        <Link
-                          key={sub.name}
-                          href={sub.href}
-                          className="block px-4 py-2.5 text-sm text-gray-600 hover:text-brand-accent hover:bg-gray-50 rounded-lg transition-colors"
-                        >
-                          {sub.name}
-                        </Link>
-                      ))}
+                    {/* Dropdown Menu Panel (CSS Hover) */}
+                    <div className="absolute top-full right-0 mt-2 w-48 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out z-50">
+                      <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-2 flex flex-col gap-1">
+                        {link.subLinks!
+                          .filter((sub) => sub.isVisible !== false)
+                          .sort((a, b) => (a.order || 0) - (b.order || 0))
+                          .map((sub) => (
+                          <Link
+                            key={sub.name}
+                            href={sub.href}
+                            className="block px-4 py-2.5 text-sm text-gray-600 hover:text-brand-accent hover:bg-gray-50 rounded-lg transition-colors"
+                          >
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                // Standard Link
-                <Link
-                  key={link._id}
-                  href={link.href}
-                  className="flex items-center text-sm font-medium text-gray-700 hover:text-brand-accent transition-colors duration-200 py-2"
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
+                ) : (
+                  // Standard Link
+                  <Link
+                    key={link._id}
+                    href={link.href}
+                    className="flex items-center text-sm font-medium text-gray-700 hover:text-brand-accent transition-colors duration-200 py-2"
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
-            {ctaLinks.map((cta) => (
-              <Link
-                key={cta._id}
-                href={cta.href}
-                className="bg-brand-primary text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-brand-accent transition-colors duration-300"
-              >
-                {cta.name}
-              </Link>
-            ))}
+            {/* CTA Button(s) */}
+            {ctaLinks.length > 0 && (
+              <div className="flex items-center space-x-4 pl-4 border-l border-gray-200">
+                {ctaLinks.map((cta) => (
+                  <Link
+                    key={cta._id}
+                    href={cta.href}
+                    className="bg-brand-primary text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-brand-accent transition-colors duration-300"
+                  >
+                    {cta.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+
           </div>
 
+          {/* 3. MOBILE MENU TOGGLE */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -182,7 +191,6 @@ export default function Navbar({ links }: NavbarProps) {
                           className="overflow-hidden bg-gray-50/50 rounded-lg mt-1"
                         >
                           <div className="pl-6 pr-3 py-2 space-y-1 border-l-2 border-brand-accent/20 ml-4">
-                            {/* 3. Filter and Sort applied here for Mobile */}
                             {link.subLinks!
                               .filter((sub) => sub.isVisible !== false)
                               .sort((a, b) => (a.order || 0) - (b.order || 0))
